@@ -6,6 +6,7 @@ const compression= require("compression")
 
 dotenv.config({path:"./.env"})
 const auth = require('./src/routes/auth')
+const Email= require('./src/routes/emailRouter')
 
 const port=process.env.PORT
 
@@ -16,6 +17,7 @@ require('./src/db/connectMongoose')
 app.use(express.json())
 app.use(compression())
 app.use('/api',auth)
+app.use('/api',Email)
 
 
 
