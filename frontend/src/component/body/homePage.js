@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import { useHistory } from "react-router-dom"
-import {host} from '../../const/host'
+import { host } from '../../const/host'
 
 const HomePage = () => {
     const history = useHistory()
@@ -23,36 +23,53 @@ const HomePage = () => {
         })
     }
 
-    const handleSubmit =async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         //console.log(user)
         const { to, cc, bcc, subject, text } = user
         //send data to backend
-        const res = await fetch(`${host}/sendEmail`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization":`Barear ${token}`
-            },
-            body: JSON.stringify({
-                to, cc, bcc, subject, text 
+        try {
+            const res = await fetch(`${host}/sendEmail`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Barear ${token}`
+                },
+                body: JSON.stringify({
+                    to, cc, bcc, subject, text
+                })
             })
-        })
-        const data = await res.json()
-            window.alert('Email Send Succesfully!!!')
+            const data = await res.json()
+            console.log(res, data)
+            setUser({
+                to: '',
+                cc: '',
+                bcc: '',
+                subject: '',
+                text: ''
+            })
 
-        setUser({
-            to: '',
-            cc: '',
-            bcc: '',
-            subject: '',
-            text: ''
-        })
+            if (res.status === 200) {
+                window.alert('Email Send Succesfully!!!')
+            } else {
+                console.log("Something went wrong!!!")
+            }
+        } catch (e) {
+            console.log("Error")
+        }
+
+
+
+
+
+        //return res.status(400).json('something went wrong!!!')
+
+
     }
 
     useEffect(() => {
-        const token=window.localStorage.getItem('token')
-        if(!token){
+        const token = window.localStorage.getItem('token')
+        if (!token) {
             history.push('/signin')
         }
     }, [])
