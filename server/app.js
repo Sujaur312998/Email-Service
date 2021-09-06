@@ -2,6 +2,7 @@ const express=require('express')
 const app = express()
 const dotenv = require('dotenv')
 const compression= require("compression")
+var cors = require('cors')
 
 
 dotenv.config({path:"./.env"})
@@ -14,8 +15,10 @@ const port=process.env.PORT
 require('./src/db/connectMongoose')
 
 //middleware
+app.use(cors())
 app.use(express.json())
 app.use(compression())
+
 app.use('/api',auth)
 app.use('/api',Email)
 
