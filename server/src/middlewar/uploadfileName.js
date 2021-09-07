@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const { passdata } = require('../controlers/sendEmail/sendEmail')
 
 const shortid = require('shortid')
 const path = require('path')
@@ -22,9 +23,14 @@ const storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).single('file')
 
-const csvFile = (result) => {
-    console.log(result)
+let newEmail = []
 
+const csvFile = (result) => {
+    for (var i = 0; i < result.length; i++) {
+        newEmail = result.concat(result[i]);
+    }
+    //console.log(newEmail)
+    passdata(newEmail)
 }
 
 const readFile = (fileName) => {
@@ -35,7 +41,7 @@ const readFile = (fileName) => {
         .on('end', () => {
             csvFile(result)
         })
-    console.log(result)
+    //console.log(result)
 }
 
 exports.uploader = (req, res) => {
