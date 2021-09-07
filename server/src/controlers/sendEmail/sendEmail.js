@@ -1,22 +1,25 @@
 const nodemailer = require('nodemailer');
 const schedule = require('node-schedule');
-const cvs = require('csv-parse')
-const fs = require('fs')
-let result = []
+// const cvs = require('csv-parse')
+// const fs = require('fs')
+// let result = []
 
 exports.sendEmail = (req, res) => {
-    const fileName = req.file.filename
+
+/*     const fileName = req.file.filename
+
     fs.createReadStream(`./src/uploads/${fileName}`)
         .pipe(cvs({}))
         .on('data', (data) => result.push(data))
         .on('end', () => {
             console.log(result)
         })
+ */
 
-    
 
-    const { to, cc, bcc, subject, text } = req.body
-    console.log(to, cc, bcc, subject, text)
+    const { to, cc, bcc, subject, text,value } = req.body
+    console.log(req.body)
+
     const newDate = Date.now() + 60 * 100
 
     schedule.scheduleJob(newDate, () => {

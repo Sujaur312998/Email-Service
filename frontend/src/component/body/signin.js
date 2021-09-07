@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { host } from '../../const/host'
 import  {useHistory} from 'react-router-dom' 
@@ -31,7 +31,7 @@ const Signin = () => {
                     localStorage.setItem('token', data.message.token)
                     localStorage.setItem('user', JSON.stringify( data.message.user))
                     history.push('/')
-                    window.alert(data.message)
+                    window.alert("Login Successfull!!!")
                 } else {
                     window.alert(data.message)
                 }

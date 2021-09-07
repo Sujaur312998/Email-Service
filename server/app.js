@@ -2,12 +2,12 @@ const express=require('express')
 const app = express()
 const dotenv = require('dotenv')
 const compression= require("compression")
-var cors = require('cors')
-
+const cors = require('cors')
 
 dotenv.config({path:"./.env"})
 const auth = require('./src/routes/auth')
-const Email= require('./src/routes/emailRouter')
+const emailRouter= require('./src/routes/emailRouter')
+const uploadfile= require('./src/middlewar/uploadfileName')
 
 const port=process.env.PORT
 
@@ -20,7 +20,8 @@ app.use(express.json())
 app.use(compression())
 
 app.use('/api',auth)
-app.use('/api',Email)
+app.use('/api',emailRouter)
+//app.use('/api',uploadfile)
 
 
 

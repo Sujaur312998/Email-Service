@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Header from './nav/header'
 import { Switch, Route } from 'react-router-dom'
 import Signin from './body/signin'
 import Signup from './body/signup'
 import HomePage from './body/homePage'
-import { Redirect } from 'react-router'
 
 const Main = () => {
 
