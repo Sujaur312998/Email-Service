@@ -1,7 +1,7 @@
 {
-  "name": "dead_lock_project",
+  "name": "email_service",
   "version": "1.0.0",
-  "description": "This is a web based app to find-Nearest Medicine Shop with All type of Pharmaceutical Kits",
+  "description": "This is a web based app for email ",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

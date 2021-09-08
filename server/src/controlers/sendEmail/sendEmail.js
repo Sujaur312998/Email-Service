@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const schedule = require('node-schedule');
+const TableSchema = require('../../model/tableSchema');
 
 
 let toEmail
@@ -19,8 +20,16 @@ exports.sendEmail = (req, res) => {
 
 
     const sendEmails = () => {
+        let id;
         console.log("setTimeOut......" + toEmail)
-        const emails=to.concat(toEmail)
+        const emails = to.concat(toEmail)
+        const emailArr = Array(emails)
+
+/*         const _tableData = new TableSchema({ emails: emailArr, emailSend: false })
+        _tableData.save()
+            .then(saved => id=saved._id)
+            .catch(err => console.log("err while saving", err)); */
+
         schedule.scheduleJob(newDate, () => {
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -39,19 +48,26 @@ exports.sendEmail = (req, res) => {
                 text: text
             };
 
-            transporter.sendMail(mailOptions, function (error, info) {
+            transporter.sendMail(mailOptions, async function (error, info) {
                 if (error) {
                     console.log(error);
                 } else {
-                    return res.status(200).json({ message: 'Email sent: ' + info.response });
+                    console.log(info)
+
+                    const _tableData = new TableSchema({ emails: info.accepted, emailSend: true })
+                    await _tableData.save()
+
+                    return res.status(200).json({
+                        message: info.response,
+                        data: emails
+                    });
                 }
             });
         });
     }
 
-    setTimeout(sendEmails, 2000)
-
-
+    setTimeout(sendEmails, 3000)
+    
 }
 
 
