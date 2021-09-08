@@ -34,6 +34,7 @@ const HomePage = () => {
         e.preventDefault()
         //console.log(user)
         const { to, cc, bcc, subject, text, minutes } = user
+        const too=to.concat(',')
 
         //        console.log(to, cc, bcc, subject, text, csvfile, value)
 
@@ -62,11 +63,11 @@ const HomePage = () => {
                     Authorization: token
                 },
                 body: JSON.stringify({
-                    to, cc, bcc, subject, csvfile, text, value, minutes
+                    too, cc, bcc, subject, csvfile, text, value, minutes
                 })
             })
             const data = await res.json()
-            
+
             setUser({
                 to: '',
                 cc: '',

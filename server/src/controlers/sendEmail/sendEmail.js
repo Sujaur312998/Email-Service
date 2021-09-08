@@ -12,7 +12,7 @@ exports.passdata = (emails) => {
 
 exports.sendEmail = (req, res) => {
 
-    const { to, cc, bcc, subject, text, value, minutes } = req.body
+    const { too, cc, bcc, subject, text, value, minutes } = req.body
     console.log(req.body)
     //console.log("sendEmail......" + toEmail)
 
@@ -22,7 +22,7 @@ exports.sendEmail = (req, res) => {
     const sendEmails = () => {
         let id;
         console.log("setTimeOut......" + toEmail)
-        const emails = to.concat(toEmail)
+        const emails = too.concat(toEmail)
         //const emailArr = emails
         console.log(Date.now() + "........." + newDate)
 
