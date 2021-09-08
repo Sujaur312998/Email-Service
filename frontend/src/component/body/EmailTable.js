@@ -29,7 +29,7 @@ const EmailTable = () => {
 
 
     return (
-        <div className='container mt-5'>
+        <div className='p-5 '>
             <table className="table table-striped table-hover">
                 <thead>
                     <tr>

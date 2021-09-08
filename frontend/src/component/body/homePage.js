@@ -17,7 +17,8 @@ const HomePage = () => {
         cc: '',
         bcc: '',
         subject: '',
-        text: ''
+        text: '',
+        minutes: 0
     })
 
     const handleInput = (e) => {
@@ -32,9 +33,9 @@ const HomePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         //console.log(user)
-        const { to, cc, bcc, subject, text } = user
+        const { to, cc, bcc, subject, text, minutes } = user
 
-//        console.log(to, cc, bcc, subject, text, csvfile, value)
+        //        console.log(to, cc, bcc, subject, text, csvfile, value)
 
         //send data to backend
         try {
@@ -61,26 +62,28 @@ const HomePage = () => {
                     Authorization: token
                 },
                 body: JSON.stringify({
-                    to, cc, bcc, subject, csvfile, text, value
+                    to, cc, bcc, subject, csvfile, text, value, minutes
                 })
             })
             const data = await res.json()
-
+            
+            setUser({
+                to: '',
+                cc: '',
+                bcc: '',
+                subject: '',
+                text: '',
+                minutes: 0
+            })
+            setCsvFile(null)
+            onChange(new Date())
             console.log(res, data)
             if (res.status === 200) {
                 window.alert("Email Send!!!")
             } else {
                 window.alert('Server Error!!!')
             }
-            setUser({
-                to: '',
-                cc: '',
-                bcc: '',
-                subject: '',
-                text: ''
-            })
-            setCsvFile(null)
-            onChange(new Date())
+
 
 
         } catch (e) {
@@ -107,6 +110,15 @@ const HomePage = () => {
                             value={value}
                         />
                     </div>
+                    <input
+                        className="form-control form-control-sm"
+                        id="min"
+                        type="number"
+                        name="minutes"
+                        placeholder="Enter minutes"
+                        value={user.minutes}
+                        onChange={handleInput}
+                    />
                 </Col>
                 <Col md={6}>
                     <form onSubmit={handleSubmit}>

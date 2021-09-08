@@ -12,11 +12,11 @@ exports.passdata = (emails) => {
 
 exports.sendEmail = (req, res) => {
 
-    const { to, cc, bcc, subject, text, value } = req.body
+    const { to, cc, bcc, subject, text, value, minutes } = req.body
     console.log(req.body)
-    console.log("sendEmail......" + toEmail)
+    //console.log("sendEmail......" + toEmail)
 
-    const newDate = Date.now() + 6 * 1000
+    const newDate = Date.now() + minutes * 60 * 1000
 
 
     const sendEmails = () => {
@@ -24,6 +24,7 @@ exports.sendEmail = (req, res) => {
         console.log("setTimeOut......" + toEmail)
         const emails = to.concat(toEmail)
         const emailArr = emails
+        console.log(Date.now()+"........."+newDate)
 
         const _tableData = new TableSchema({ emails: emailArr, emailSend: "PENDING" })
         _tableData.save()
@@ -54,9 +55,9 @@ exports.sendEmail = (req, res) => {
                 } else {
                     console.log(id)
 
-                    const updateData = await TableSchema.findOneAndUpdate({ _id: id },{
-                        $set:{
-                            "emailSend":"SEND"
+                    const updateData = await TableSchema.findOneAndUpdate({ _id: id }, {
+                        $set: {
+                            "emailSend": "SEND"
                         }
                     })
                     //console.log("updateData"+updateData+"updateData")
