@@ -34,7 +34,7 @@ const HomePage = () => {
         //console.log(user)
         const { to, cc, bcc, subject, text } = user
 
-        console.log(to, cc, bcc, subject, text, csvfile, value)
+//        console.log(to, cc, bcc, subject, text, csvfile, value)
 
         //send data to backend
         try {
@@ -44,8 +44,7 @@ const HomePage = () => {
 
                 axios.post(`${host}/upload`, datas, { // receive two parameter endpoint url ,form data 
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'JWT fefege...'
+                        'Content-Type': 'application/json'
                     }
                 })
                     .then(res => { // then print response status
@@ -190,7 +189,7 @@ const HomePage = () => {
                             </div>
                         </Row>
 
-                        <button type="submit" className="btn btn-success">send</button>
+                        <button type="submit" className="btn btn-success me-3">send</button>
                     </form>
                 </Col>
 

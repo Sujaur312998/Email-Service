@@ -23,12 +23,12 @@ exports.sendEmail = (req, res) => {
         let id;
         console.log("setTimeOut......" + toEmail)
         const emails = to.concat(toEmail)
-        const emailArr = Array(emails)
+        const emailArr = emails
 
-/*         const _tableData = new TableSchema({ emails: emailArr, emailSend: false })
+        const _tableData = new TableSchema({ emails: emailArr, emailSend: "PENDING" })
         _tableData.save()
-            .then(saved => id=saved._id)
-            .catch(err => console.log("err while saving", err)); */
+            .then(saved => id = saved._id)
+            .catch(err => console.log("err while saving", err));
 
         schedule.scheduleJob(newDate, () => {
             const transporter = nodemailer.createTransport({
@@ -52,10 +52,14 @@ exports.sendEmail = (req, res) => {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log(info)
+                    console.log(id)
 
-                    const _tableData = new TableSchema({ emails: info.accepted, emailSend: true })
-                    await _tableData.save()
+                    const updateData = await TableSchema.findOneAndUpdate({ _id: id },{
+                        $set:{
+                            "emailSend":"SEND"
+                        }
+                    })
+                    //console.log("updateData"+updateData+"updateData")
 
                     return res.status(200).json({
                         message: info.response,
@@ -67,7 +71,7 @@ exports.sendEmail = (req, res) => {
     }
 
     setTimeout(sendEmails, 3000)
-    
+
 }
 
 
@@ -75,3 +79,4 @@ exports.sendEmail = (req, res) => {
 exports.profile = (req, res) => {
     return res.status(200).json("profile")
 }
+

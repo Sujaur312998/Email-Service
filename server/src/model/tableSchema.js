@@ -1,15 +1,14 @@
 const mongoose = require('mongoose')
 
 const tableSchema = new mongoose.Schema({
-    emails: [
-        {
-            type: String,
-            required: true,
-            trim: true
-        }
-    ],
+    emails: {
+        type: String,
+        required: true,
+        trim: true
+    },
     emailSend: {
-        type: Boolean
+        type: String,
+        require:true
     }
 })
 

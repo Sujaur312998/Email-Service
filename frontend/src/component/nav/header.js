@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useHistory , withRouter} from "react-router-dom"
+import { useHistory, withRouter } from "react-router-dom"
 
 
 
@@ -15,12 +15,12 @@ const Header = () => {
         history.push('/signin')
     }
     useEffect(() => {
-        if(token===null){
+        if (token === null) {
             setstate(false)
-        }else{
+        } else {
             setstate(true)
         }
-    },[state])
+    }, [state])
     return (
         <div>
             <nav className="navbar navbar-expand-md bg-dark navbar-dark " >
@@ -35,9 +35,14 @@ const Header = () => {
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             {
                                 token ?
-                                    <li className="nav-item">
-                                        <nav className="nav-link" style={{ cursor: "pointer" }} onClick={logout}>SignOut</nav>
-                                    </li>
+                                    <>
+                                        <li className="nav-item">
+                                            <NavLink className="nav-link" to="/emailtable">Email Table</NavLink>
+                                        </li>
+                                        <li className="nav-item">
+                                            <nav className="nav-link" style={{ cursor: "pointer" }} onClick={logout}>SignOut</nav>
+                                        </li>
+                                    </>
                                     :
                                     <>
                                         <li className="nav-item">
