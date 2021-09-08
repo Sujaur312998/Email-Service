@@ -16,17 +16,17 @@ exports.sendEmail = (req, res) => {
     console.log(req.body)
     //console.log("sendEmail......" + toEmail)
 
-    const newDate = Date.now() + minutes * 60 * 1000
+    const newDate = Date.now() + minutes * 60 * 1000+6000
 
 
     const sendEmails = () => {
         let id;
         console.log("setTimeOut......" + toEmail)
         const emails = to.concat(toEmail)
-        const emailArr = emails
-        console.log(Date.now()+"........."+newDate)
+        //const emailArr = emails
+        console.log(Date.now() + "........." + newDate)
 
-        const _tableData = new TableSchema({ emails: emailArr, emailSend: "PENDING" })
+        const _tableData = new TableSchema({ emails: emails, emailSend: "PENDING" })
         _tableData.save()
             .then(saved => id = saved._id)
             .catch(err => console.log("err while saving", err));
@@ -48,19 +48,20 @@ exports.sendEmail = (req, res) => {
                 subject: subject,
                 text: text
             };
+            console.log(mailOptions)
 
             transporter.sendMail(mailOptions, async function (error, info) {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log(id)
+                    console.log(info, id)
 
                     const updateData = await TableSchema.findOneAndUpdate({ _id: id }, {
                         $set: {
                             "emailSend": "SEND"
                         }
                     })
-                    //console.log("updateData"+updateData+"updateData")
+                    console.log("updateData" + updateData + "updateData")
 
                     return res.status(200).json({
                         message: info.response,
@@ -71,7 +72,7 @@ exports.sendEmail = (req, res) => {
         });
     }
 
-    setTimeout(sendEmails, 3000)
+    setTimeout(sendEmails, 1000)
 
 }
 
